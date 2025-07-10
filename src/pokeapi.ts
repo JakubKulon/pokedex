@@ -1,5 +1,15 @@
+import { Cache } from "./pokecache";
+
+const cache = new Cache(5000);
+
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
+
+  #cache: Cache;
+
+  constructor(cache: Cache) {
+    this.#cache = cache;
+  }
 
   async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
     if (!pageURL) {
@@ -14,6 +24,11 @@ export class PokeAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok!");
       }
+
+      this.#cache.add(pageURL, {
+        createdAt: Date.now(),
+        val: await response.json(),
+      });
 
       return response.json();
     } catch (err) {

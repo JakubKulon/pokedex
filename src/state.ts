@@ -1,6 +1,7 @@
 import { createInterface, type Interface } from "readline";
 import { getCommands } from "./command_registry.js";
 import { PokeAPI, ShallowLocations } from "./pokeapi.js";
+import { globalLocationCache } from "./pokecache.js";
 export type CLICommand = {
   name: string;
   description: string;
@@ -15,7 +16,7 @@ export type State = {
   prevLocationsURL: ShallowLocations["previous"];
 };
 export async function initState(): Promise<State> {
-  const pokeAPI = new PokeAPI();
+  const pokeAPI = new PokeAPI(globalLocationCache);
 
   const readline = createInterface({
     input: process.stdin,
