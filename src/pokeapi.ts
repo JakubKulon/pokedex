@@ -1,4 +1,4 @@
-import { Cache } from "./pokecache.js";
+import { Cache } from "./cache/pokecache.js";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";

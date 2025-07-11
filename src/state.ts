@@ -1,7 +1,8 @@
 import { createInterface, type Interface } from "readline";
 import { getCommands } from "./command_registry.js";
 import { PokeAPI, ShallowLocations } from "./pokeapi.js";
-import { globalLocationCache } from "./pokecache.js";
+import { globalLocationCache } from "./cache/pokecache.js";
+
 export type CLICommand = {
   name: string;
   description: string;

@@ -29,7 +29,7 @@ export class Cache {
 
   #reap() {
     this.#cache.forEach((cache, key) => {
-      if (cache.createdAt < Date.now() - this.#interval) {
+      if (cache.createdAt <= Date.now() - this.#interval) {
         this.#cache.delete(key);
       }
     });
