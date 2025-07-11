@@ -1,6 +1,4 @@
-import { Cache } from "./pokecache";
-
-const cache = new Cache(5000);
+import { Cache } from "./pokecache.js";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
@@ -16,6 +14,13 @@ export class PokeAPI {
       pageURL = `${PokeAPI.baseURL}/location-area`;
     }
 
+    const cachedURL = this.#cache.get<ShallowLocations>(pageURL);
+
+    if (cachedURL) {
+      console.log("from cache");
+      return cachedURL;
+    }
+
     try {
       const response = await fetch(pageURL, {
         method: "GET",
@@ -24,13 +29,11 @@ export class PokeAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok!");
       }
+      const data = await response.json();
 
-      this.#cache.add(pageURL, {
-        createdAt: Date.now(),
-        val: await response.json(),
-      });
+      this.#cache.add(pageURL, data);
 
-      return response.json();
+      return data;
     } catch (err) {
       throw new Error(
         "Failed to fetch data: " +

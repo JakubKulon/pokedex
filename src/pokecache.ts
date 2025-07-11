@@ -16,17 +16,20 @@ export class Cache {
     this.#startReapLoop();
   }
 
-  add<T>(key: string, val: CacheEntry<T>) {
-    this.#cache.set(key, val);
+  add<T>(key: string, val: T) {
+    this.#cache.set(key, {
+      createdAt: Date.now(),
+      val,
+    });
   }
 
-  get<T>(key: string): CacheEntry<T> | undefined {
-    return this.#cache.get(key);
+  get<T>(key: string): T | undefined {
+    return this.#cache.get(key)?.val;
   }
 
   #reap() {
     this.#cache.forEach((cache, key) => {
-      if (cache.createdAt > Date.now() - this.#interval) {
+      if (cache.createdAt < Date.now() - this.#interval) {
         this.#cache.delete(key);
       }
     });
@@ -44,4 +47,4 @@ export class Cache {
   }
 }
 
-export const globalLocationCache = new Cache(5000);
+export const globalLocationCache = new Cache(10000);
