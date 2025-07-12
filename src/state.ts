@@ -1,6 +1,6 @@
 import { createInterface, type Interface } from "readline";
 import { getCommands } from "./command_registry.js";
-import { PokeAPI, Locations } from "./pokeapi.js";
+import { PokeAPI, Locations, Pokemon } from "./pokeapi.js";
 import { globalLocationCache } from "./cache/pokecache.js";
 
 export type CLICommand = {
@@ -15,6 +15,7 @@ export type State = {
   pokeAPI: PokeAPI;
   nextLocationsURL: Locations["next"];
   prevLocationsURL: Locations["previous"];
+  pokedex: Record<string, Pokemon>;
 };
 export async function initState(): Promise<State> {
   const pokeAPI = new PokeAPI(globalLocationCache);
@@ -45,5 +46,6 @@ export async function initState(): Promise<State> {
     nextLocationsURL: nextURL,
     prevLocationsURL: prevURL,
     pokeAPI: pokeAPI,
+    pokedex: {},
   };
 }

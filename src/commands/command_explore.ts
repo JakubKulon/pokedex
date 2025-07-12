@@ -1,4 +1,7 @@
-import { LocationsDetails, POKE_API_ENDPOINT } from "../pokeapi.js";
+import {
+  LocationsDetails,
+  POKE_API_ENDPOINT_AREA_LOCATION,
+} from "../pokeapi.js";
 import { State } from "../state.js";
 
 export async function commandExplore(state: State, ...args: string[]) {
@@ -6,7 +9,7 @@ export async function commandExplore(state: State, ...args: string[]) {
     console.log(`Exploring ${args}...`);
     const locationsResponse =
       await state.pokeAPI.fetchLocations<LocationsDetails>(
-        `${POKE_API_ENDPOINT}/${args}`,
+        `${POKE_API_ENDPOINT_AREA_LOCATION}/${args}`,
       );
     const pokemonsInArea = locationsResponse.pokemon_encounters;
     console.log("Found Pokemon:");
