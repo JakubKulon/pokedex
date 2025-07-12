@@ -1,3 +1,4 @@
+import { Locations } from "src/pokeapi";
 import { State } from "../state";
 
 export async function commandMapBack(state: State) {
@@ -7,7 +8,7 @@ export async function commandMapBack(state: State) {
     return;
   }
   try {
-    const locationsResponse = await state.pokeAPI.fetchLocations(
+    const locationsResponse = await state.pokeAPI.fetchLocations<Locations>(
       state.prevLocationsURL,
     );
     state.prevLocationsURL = locationsResponse.previous;

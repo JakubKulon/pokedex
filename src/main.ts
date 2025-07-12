@@ -7,14 +7,14 @@ async function main() {
 
   rl.readline.prompt();
 
-  rl.readline.on("line", (input) => {
+  rl.readline.on("line", async (input) => {
     if (!input) {
       rl.readline.prompt();
     }
     const output = cleanInput(input);
     const commands = getCommands();
     if (commands[output[0]]) {
-      commands[output[0]].callback(rl);
+      await commands[output[0]].callback(rl, output[1]);
     } else {
       console.log("unknown command");
     }

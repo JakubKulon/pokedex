@@ -1,4 +1,5 @@
 import { commandExit } from "./commands/command_exit.js";
+import { commandExplore } from "./commands/command_explore.js";
 import { commandHelp } from "./commands/command_help.js";
 import { commandMap } from "./commands/command_map.js";
 import { commandMapBack } from "./commands/command_mapback.js";
@@ -25,6 +26,11 @@ export function getCommands(): Record<string, CLICommand> {
       name: "mapb",
       description: "Show previous 20 location",
       callback: commandMapBack,
+    },
+    explore: {
+      name: "explore",
+      description: "explore area",
+      callback: commandExplore,
     },
     // can add more commands here
   };

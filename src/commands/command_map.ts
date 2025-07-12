@@ -1,8 +1,9 @@
+import { Locations } from "src/pokeapi.js";
 import { State } from "../state";
 
 export async function commandMap(state: State) {
   try {
-    const locationsResponse = await state.pokeAPI.fetchLocations(
+    const locationsResponse = await state.pokeAPI.fetchLocations<Locations>(
       state.nextLocationsURL || undefined,
     );
     state.nextLocationsURL = locationsResponse.next;

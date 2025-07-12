@@ -1,20 +1,20 @@
 import { createInterface, type Interface } from "readline";
 import { getCommands } from "./command_registry.js";
-import { PokeAPI, ShallowLocations } from "./pokeapi.js";
+import { PokeAPI, Locations } from "./pokeapi.js";
 import { globalLocationCache } from "./cache/pokecache.js";
 
 export type CLICommand = {
   name: string;
   description: string;
-  callback: (state: State) => Promise<void>;
+  callback: (state: State, ...args: string[]) => Promise<void>;
 };
 
 export type State = {
   readline: Interface;
   commands: Record<string, CLICommand>;
   pokeAPI: PokeAPI;
-  nextLocationsURL: ShallowLocations["next"];
-  prevLocationsURL: ShallowLocations["previous"];
+  nextLocationsURL: Locations["next"];
+  prevLocationsURL: Locations["previous"];
 };
 export async function initState(): Promise<State> {
   const pokeAPI = new PokeAPI(globalLocationCache);
@@ -23,6 +23,7 @@ export async function initState(): Promise<State> {
     input: process.stdin,
     output: process.stdout,
     prompt: `Pokedex > `,
+    tabSize: 2,
   });
 
   let nextURL = null;
