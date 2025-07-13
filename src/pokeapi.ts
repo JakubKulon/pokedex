@@ -88,4 +88,15 @@ export type Pokemon = {
   height: number;
   weight: number;
   name: string;
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string,
+    }
+  }[]
+  types: {
+    type: {
+      name: string
+    }
+  }[]
 };

@@ -1,4 +1,3 @@
-import { POKE_API_ENDPOINT_POKEMON } from "../pokeapi.js";
 import { State } from "../state.js";
 
 export async function commandCatch(state: State, ...args: string[]) {
@@ -6,12 +5,13 @@ export async function commandCatch(state: State, ...args: string[]) {
   try {
     const pokemonData = await state.pokeAPI.fetchPokemon(pokemonName);
 
-    const { base_experience, name, height, weight } = pokemonData;
+    const { base_experience, name, height, weight, stats, types } = pokemonData;
     console.log(`Throwing a Pokeball at ${name}...`);
     const rollResult = Math.random() * base_experience;
     if (rollResult > base_experience / 2) {
       console.log(`${name} was caught!`);
-      state.pokedex[name] = { base_experience, height, name, weight };
+      state.pokedex[name] = { base_experience, height, name, weight, stats, types };
+      console.log('You may now inspect it with the inspect command.')
     } else {
       console.log(`${name} escaped!`);
       return;
